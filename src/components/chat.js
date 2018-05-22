@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+
 import db from '../firebase';
 
 class Chat extends Component{
