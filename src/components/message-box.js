@@ -1,6 +1,6 @@
 import React, { Fragment, Component } from 'react';
 import {connect} from 'react-redux';
-import {updateInput, sendMessageToDB} from'../actions';
+import {updateInput, sendMessageToDB, clearInput} from'../actions';
 
 
 class MessageBox extends Component {
@@ -8,6 +8,8 @@ class MessageBox extends Component {
        e.preventDefault(); 
         
        sendMessageToDB(this.props.message);
+
+       this.props.clearInput('message');
     }
     handleInpputChange(e){
         const {name, value} = e.target;
@@ -35,4 +37,4 @@ function mstp(state){
     }
 }
 
-export default connect(mstp, {updateInput, sendMessageToDB})(MessageBox);
+export default connect(mstp, {clearInput, updateInput})(MessageBox);
