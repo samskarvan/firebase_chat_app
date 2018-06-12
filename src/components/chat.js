@@ -6,13 +6,15 @@ import MessageBox from './message-box';
 
 class Chat extends Component{
     componentDidMount(){
-        db.ref('/chat-log').on('value', (snapshot)=>{
+        const {id} = this.props.match.params;
+
+        db.ref(`/chat-rooms/${id}`).on('value', (snapshot)=>{
             this.props.updateChat(snapshot.val());
         });
     }
 
     render() {
-        const{chatLog} = this.props;
+        const{chatLog, roomName, match:{params}} = this.props;
         const chatElements = Object.keys(chatLog).map((key,index)=>{
             const {name, message} = chatLog[key];
             return <li className="collection-item" key={key}><b>{name}</b>{message}</li>
@@ -21,10 +23,10 @@ class Chat extends Component{
         console.log('chat log:', this.props.chatLog);
         return (
             <div className='center'>
-                <h1>Aca, charlamos juntos</h1>
+                <h1>{roomName || 'Chat Room'}</h1>
                 <h4>chat it up</h4>
                 <ul className="collection"> {chatElements}</ul>
-                <MessageBox/>
+                <MessageBox roomId={params.id}/>
             </div>
         )
     }
@@ -32,7 +34,8 @@ class Chat extends Component{
 
 function mstp(state){
     return{
-        chatLog: state.chat.log
+        chatLog: state.chat.log,
+        roomName: state.chat.name
     }
 }
 

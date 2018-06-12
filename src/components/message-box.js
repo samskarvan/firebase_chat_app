@@ -7,9 +7,12 @@ class MessageBox extends Component {
     sendMessage(e){
        e.preventDefault(); 
         
-       sendMessageToDB(this.props.message);
+       const {message, roomId, clearInput} = this.props;
+        console.log(this.props);
+       sendMessageToDB(message, roomId);
 
        this.props.clearInput('message');
+
     }
     handleInpputChange(e){
         const {name, value} = e.target;
